@@ -1,0 +1,132 @@
+$primary-color: #000;
+$secondary-color: #aaa;
+$border: 1px solid #eee;
+$primary-background: rgba(255,255,255,.8);
+$secondary-background: rgba(255,255,255,1);
+
+
+.header {
+  width: 100%;
+  z-index: 3000;
+  text-align: center;
+  backdrop-filter: saturate(180%) blur(5px);
+  background: $primary-background;
+  position: sticky;
+  top: 0;
+  border-bottom: $border;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.navbar {
+  display: flex;
+  height: 80px;
+  align-items: center;
+  margin:0 auto;
+  padding: 0 1rem;
+  .heading {
+    margin: .67rem 2rem;
+  }
+}
+
+.menuButton {
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  height: 36px;
+  width: 36px;
+  border: none;
+  background-color: transparent;
+  display: flex;
+  position: absolute;
+  top: 25px;
+  right: 15px;
+  display: none;
+  cursor: pointer;
+  
+  .menuToggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+
+    &::before, &::after {
+      content: "";
+      display: block;
+      height: 1px;
+      width: 22px;
+      background-color: $primary-color;
+      transform: translateY(-4px);
+      transition: transform .15s ease;
+    }
+    &::before {
+      transform: translateY(-4px);
+    }
+    &::after {
+      transform: translateY(4px);
+    }
+    &.expanded::before {
+      transform: translateY(1px) rotate(45deg);
+    }
+    &.expanded::after {
+      transform: translateY(0px) rotate(-45deg);
+    }
+  }
+}
+
+.navigationMenu ul {
+  display: flex;
+  padding: 0;
+  li {
+    list-style-type: none;
+    margin: 0 1rem;
+    a {
+      text-decoration: none;
+      color: $secondary-color;
+      display: block;
+      width: 100%;
+      &:hover {
+        color: $primary-color;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+    position: relative;
+  }
+  .navbar .heading {
+    margin: .67rem .67rem;
+  }
+  .menuButton {
+    display: block;
+  }
+  .navigationMenu {
+    ul {
+      display: none;
+      position: absolute;
+      top: 80px;
+      left: 0;
+      flex-direction: column;
+      width: 100%;
+      height: calc(100vh - 80px);
+      margin: 0;
+      background-color: $secondary-background;
+      li {
+        text-align: center;
+        margin: 0;
+        a {
+          width: 100%;
+          padding: 1.2rem 0;
+        }
+      }
+    }
+    &.expanded ul {
+      display: block;
+    }
+  }
+}
