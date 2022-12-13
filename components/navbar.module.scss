@@ -1,8 +1,8 @@
 $primary-color: #000;
 $secondary-color: #aaa;
 $border: 1px solid #eee;
-$primary-background: rgba(255,255,255,.8);
-$secondary-background: rgba(255,255,255,1);
+$primary-background: rgba(255, 255, 255, .8);
+$secondary-background: rgba(255, 255, 255, 1);
 
 
 .header {
@@ -22,8 +22,9 @@ $secondary-background: rgba(255,255,255,1);
   display: flex;
   height: 80px;
   align-items: center;
-  margin:0 auto;
+  margin: 0 auto;
   padding: 0 1rem;
+
   .heading {
     margin: .67rem 2rem;
   }
@@ -43,7 +44,7 @@ $secondary-background: rgba(255,255,255,1);
   right: 15px;
   display: none;
   cursor: pointer;
-  
+
   .menuToggle {
     display: flex;
     flex-direction: column;
@@ -53,7 +54,8 @@ $secondary-background: rgba(255,255,255,1);
     height: 100%;
     pointer-events: none;
 
-    &::before, &::after {
+    &::before,
+    &::after {
       content: "";
       display: block;
       height: 1px;
@@ -62,15 +64,19 @@ $secondary-background: rgba(255,255,255,1);
       transform: translateY(-4px);
       transition: transform .15s ease;
     }
+
     &::before {
       transform: translateY(-4px);
     }
+
     &::after {
       transform: translateY(4px);
     }
+
     &.expanded::before {
       transform: translateY(1px) rotate(45deg);
     }
+
     &.expanded::after {
       transform: translateY(0px) rotate(-45deg);
     }
@@ -80,14 +86,17 @@ $secondary-background: rgba(255,255,255,1);
 .navigationMenu ul {
   display: flex;
   padding: 0;
+
   li {
     list-style-type: none;
     margin: 0 1rem;
+
     a {
       text-decoration: none;
       color: $secondary-color;
       display: block;
       width: 100%;
+
       &:hover {
         color: $primary-color;
       }
@@ -99,12 +108,15 @@ $secondary-background: rgba(255,255,255,1);
   .header {
     position: relative;
   }
+
   .navbar .heading {
     margin: .67rem .67rem;
   }
+
   .menuButton {
     display: block;
   }
+
   .navigationMenu {
     ul {
       display: none;
@@ -116,15 +128,18 @@ $secondary-background: rgba(255,255,255,1);
       height: calc(100vh - 80px);
       margin: 0;
       background-color: $secondary-background;
+
       li {
         text-align: center;
         margin: 0;
+
         a {
           width: 100%;
           padding: 1.2rem 0;
         }
       }
     }
+
     &.expanded ul {
       display: block;
     }

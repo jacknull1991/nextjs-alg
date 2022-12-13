@@ -1,7 +1,7 @@
 import React from "react"
 import Navbar from "./navbar"
 
-import styles from './layout.module.css'
+import styles from './layout.module.scss'
 
 export default function Layout({
   children

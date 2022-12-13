@@ -17,14 +17,14 @@ export default function Navbar() {
           }}
         >
           <div className={
-            !isNavExpanded ? 
-            styles.menuToggle :
-            `${styles.menuToggle} ${styles.expanded}`}></div>
+            !isNavExpanded ?
+              styles.menuToggle :
+              `${styles.menuToggle} ${styles.expanded}`}></div>
         </button>
         <div className={
-          !isNavExpanded ? 
-          styles.navigationMenu : 
-          `${styles.navigationMenu} ${styles.expanded}`}>
+          !isNavExpanded ?
+            styles.navigationMenu :
+            `${styles.navigationMenu} ${styles.expanded}`}>
           <ul>
             <li><Link href="/">Home</Link></li>
             <li><Link href="/1">Algo1</Link></li>
