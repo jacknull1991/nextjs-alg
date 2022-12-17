@@ -1,0 +1,15 @@
+$primary_color: hotpink;
+$alter_color: blue;
+$pivot_color: red;
+
+:export {
+  primaryBarColor: $primary_color;
+  alterBarColor: $alter_color;
+  pivotBarColor: $pivot_color;
+}
+
+.verticalBar {
+  width: 20px;
+  display: block;
+  margin: 0 1px;
+}

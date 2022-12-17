@@ -1,0 +1,30 @@
+.controlButton {
+  display: block;
+  border-radius: 5px;
+  color: #0070f3;
+  background-color: #fff;
+  border: none;
+  padding: .3rem .67rem;
+  margin: 0 5px;
+  font-weight: 400;
+  outline: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #e9f3ff;
+  }
+  &.active {
+    background-color: #0070f3;
+    color: #fff;
+    text-shadow: 0 0 3px #111, 0 0 3px #111;
+  }
+  &:disabled {
+    color: #aaa;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .controlButton {
+    flex: 1 1 30%;
+  }
+}

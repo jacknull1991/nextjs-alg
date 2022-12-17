@@ -27,9 +27,8 @@ export default function Navbar() {
             `${styles.navigationMenu} ${styles.expanded}`}>
           <ul>
             <li><Link href="/">Home</Link></li>
-            <li><Link href="/1">Algo1</Link></li>
-            <li><Link href="/2">Algo2</Link></li>
-            <li><Link href="/3">Algo3</Link></li>
+            <li><Link href="/sorting">Sorting</Link></li>
+            <li><Link href="/graphs">Graphs</Link></li>
           </ul>
         </div>
       </div>

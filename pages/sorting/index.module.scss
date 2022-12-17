@@ -1,0 +1,69 @@
+.mainContainer {
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.controlContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  height: fit-content;
+  align-items: center;
+  margin: 0 auto;
+  padding: 0 1rem;
+  justify-content: center;
+  .heading {
+    position: relative;
+    top: -5px;
+  }
+  .buttonGroup {
+    display: flex;
+    flex-direction: row;
+    border-left: 2px solid #eee;
+    border-right: 2px solid #eee;
+    .separator {
+      width: 2;
+      height: 1rem;
+      background-color: #eee;
+      align-self: center;
+    }
+  }
+}
+
+
+.animationContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: auto;
+  min-height: calc(100vh - 160px);
+  margin-bottom: 5px;
+  .arrayBar {
+    width: 20px;
+    background-color: hotpink;
+    display: block;
+    margin: 0 1px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .controlContainer {
+    height: auto;
+    padding: .2rem 2rem;
+    
+    .heading {
+      width: 100%;
+    }
+    .buttonGroup {
+      border: none;
+      flex-wrap: wrap;
+      .separator {
+        display: none;
+      }
+    }
+  }
+
+  .animationContainer {
+    margin-bottom: 5px;
+  }
+}
