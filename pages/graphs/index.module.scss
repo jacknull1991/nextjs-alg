@@ -30,14 +30,16 @@
   }
 }
 
-
 .animationContainer {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
   height: auto;
   min-height: calc(100vh - 160px);
   margin-bottom: 5px;
+
+}
+.gridRow {
+  // min-width: 800px;
+  display: flex;
+  justify-content: center;
 }
 
 @media screen and (max-width: 768px) {

@@ -1,0 +1,34 @@
+.sliderContainer {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+
+  .sliderLabel {
+    color: #0070f3;
+    background-color: #fff;
+    font-weight: 400;
+    margin: 0 5px;
+  }
+
+  .sliderInput {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 120px;
+    height: 12px;
+    background-color: #aaa;
+    outline: none;
+    opacity: 1.0;
+    transition: opacity .2s;
+    border-radius: 5px;
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background: #0070f3;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+  }
+}

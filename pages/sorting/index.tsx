@@ -2,6 +2,7 @@ import Layout from "../../components/layout"
 import Head from "next/head"
 import Modal from "../../components/Modal"
 import ControlButton from "../../components/ControlButton"
+import Slider from "../../components/Slider"
 import VerticalBar from "../../components/VerticalBar"
 import { useEffect } from 'react'
 import { atom, useAtom } from "jotai"
@@ -17,7 +18,8 @@ type Bar = {
   backgroundColor: string
 }
 
-const SIZE = 10;
+const SIZE = 20;
+const arraySizeAtom = atom(SIZE);
 const MAX_HEIGHT = 600;
 const MIN_HEIGHT = 10;
 const ANIMATION_SPEED = 3;
@@ -37,6 +39,7 @@ function randomIntFromInterval(min: number, max: number) {
 export default function IndexPage() {
   const [currentAlgo, setCurrentAlgo] = useAtom(algoAtom);
   const [array, setArray] = useAtom(arrAtom);
+  const [arraySize, setArraySize] = useAtom(arraySizeAtom);
   const [animated, setAnimated] = useAtom(animateAtom);
   const [modalShow, setModalShow] = useAtom(modalAtom);
   const [countCompare, setCountCompare] = useAtom(countCompareAtom);
@@ -50,7 +53,7 @@ export default function IndexPage() {
 
   function resetArray() {
     const arr: Bar[] = [];
-    for (let i = 0; i < SIZE; i++) {
+    for (let i = 0; i < arraySize; i++) {
       const height = Math.min(randomIntFromInterval(MIN_HEIGHT, MAX_HEIGHT));
       arr.push({ height: height, backgroundColor: colors.primaryBarColor });
     }
@@ -111,6 +114,7 @@ export default function IndexPage() {
       </Head>
       <Modal show={modalShow} setShow={setModalShow} title="Sort Result">
         <ul>
+          <li>Array size: {arraySize} </li>
           <li>Algorithm time elapsed: {timeElapsed.toFixed(4)} milliseconds </li>
           <li>Number of comparisons: {countCompare} </li>
           <li>Number of Swaps: {countSwap} </li>
@@ -120,6 +124,7 @@ export default function IndexPage() {
       <div className={styles.mainContainer}>
         <div className={styles.controlContainer}>
           <h2 className={styles.heading}>Sorting Visualization</h2>
+          <Slider label={"Size:"} min={10} max={250} value={arraySize} setValue={setArraySize} />
           <ControlButton text="Reset" action={resetArray} disabled={animated} />
           <div className={styles.buttonGroup}>
             <ControlButton text="Merge Sort" action={() => setCurrentAlgo(0)} active={currentAlgo === 0} />
