@@ -12,16 +12,19 @@ export enum GridNodeType {
 
 export type Coord = [number, number];
 
+export type ArrayBar = {
+  height: number,
+  backgroundColor: string
+};
+
 export type GridNode = {
-  // row: number,
-  // col: number,
   coord: Coord,
   type: GridNodeType,
   distance: number,
   previous: GridNode | null
-}
+};
 
-const useCommitCount = () => {
+export const useCommitCount = () => {
   const commitCountRef = useRef(0);
   useEffect(() => {
     commitCountRef.current += 1;

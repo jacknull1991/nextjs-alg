@@ -4,7 +4,7 @@ import Modal from "../../components/Modal"
 import ControlButton from "../../components/ControlButton"
 import GraphNode from "../../components/GraphNode"
 import { GridNodeType, GridNode, Coord } from "../../lib/utils"
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { atom, useAtom } from "jotai"
 import { atomWithImmer } from "jotai/immer"
 

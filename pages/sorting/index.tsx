@@ -12,68 +12,52 @@ import Algorithms from '../../lib/sorting'
 
 import styles from './index.module.scss'
 import colors from '../../components/VerticalBar.module.scss'
+import { ArrayBar } from "../../lib/utils"
 
-type Bar = {
-  height: number,
-  backgroundColor: string
-}
-
+//#region CONSTANTS
 const SIZE = 20;
-const arraySizeAtom = atom(SIZE);
 const MAX_HEIGHT = 600;
 const MIN_HEIGHT = 10;
 const ANIMATION_SPEED = 3;
+//#endregion
 
-const arrAtom = atomWithImmer<Bar[]>([]);
-const algoAtom = atom(0);
-const animateAtom = atom(false);
+//#region States definitions
+const arrayAtom = atomWithImmer<ArrayBar[]>([]);
+const arraySizeAtom = atom(SIZE);
+const algorithmAtom = atom(0);
+const animatedAtom = atom(false);
 const modalAtom = atom(false);
 const countCompareAtom = atom(0);
 const countSwapAtom = atom(0);
 const timeElapsedAtom = atom(0);
 
-function randomIntFromInterval(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-export default function IndexPage() {
-  const [currentAlgo, setCurrentAlgo] = useAtom(algoAtom);
-  const [array, setArray] = useAtom(arrAtom);
-  const [arraySize, setArraySize] = useAtom(arraySizeAtom);
-  const [animated, setAnimated] = useAtom(animateAtom);
-  const [modalShow, setModalShow] = useAtom(modalAtom);
-  const [countCompare, setCountCompare] = useAtom(countCompareAtom);
-  const [countSwap, setCountSwap] = useAtom(countSwapAtom);
-  const [timeElapsed, setTimeElapsed] = useAtom(timeElapsedAtom);
-
-  // reset array on first render
-  useEffect(() => {
-    resetArray();
-  }, []);
-
-  function resetArray() {
-    const arr: Bar[] = [];
-    for (let i = 0; i < arraySize; i++) {
+const handleResetAtom = atom(
+  null,
+  (get, set) => {
+    const arr: ArrayBar[] = [];
+    for (let i = 0; i < get(arraySizeAtom); i++) {
       const height = Math.min(randomIntFromInterval(MIN_HEIGHT, MAX_HEIGHT));
       arr.push({ height: height, backgroundColor: colors.primaryBarColor });
     }
-    setArray(arr);
+    set(arrayAtom, arr);
   }
+)
 
-  // start animation
-  function startSorting() {
-    setAnimated(true);
+const handleAnimationAtom = atom(
+  (get) => get(animatedAtom),
+  (get, set) => {
+    set(animatedAtom, true);
 
-    const heights = array.map(bar => bar.height);
+    const heights = get(arrayAtom).map(bar => bar.height);
     let numberOfComparison = 0;
     let numberOfSwap = 0;
     const startTime = performance.now();
-    const animations = Algorithms[currentAlgo](heights);
+    const animations = Algorithms[get(algorithmAtom)](heights);
     const duration = performance.now() - startTime;
 
     setTimeout(() => {
-      setAnimated(false);
-      setModalShow(true);
+      set(animatedAtom, false);
+      set(modalAtom, true);
     }, (animations.length + 1) * ANIMATION_SPEED);
 
     for (let i = 0; i < animations.length; i++) {
@@ -82,7 +66,7 @@ export default function IndexPage() {
         case "color":
           numberOfComparison++;
           setTimeout(() => {
-            setArray((draft) => {
+            set(arrayAtom, (draft) => {
               draft[index].backgroundColor = value as string;
               return draft;
             })
@@ -91,7 +75,7 @@ export default function IndexPage() {
         case "height":
           numberOfSwap++;
           setTimeout(() => {
-            setArray((draft) => {
+            set(arrayAtom, (draft) => {
               draft[index].height = value as number;
               return draft;
             })
@@ -102,10 +86,72 @@ export default function IndexPage() {
       }
     }
 
-    setCountCompare(Math.floor(numberOfComparison / 2));
-    setCountSwap(numberOfSwap);
-    setTimeElapsed(duration);
+    set(countCompareAtom, Math.floor(numberOfComparison / 2));
+    set(countSwapAtom, numberOfSwap);
+    set(timeElapsedAtom, duration);
   }
+)
+
+const handleAlgorithmAtom = atom(
+  (get) => get(algorithmAtom),
+  (_get, set, update: number) => {
+    set(algorithmAtom, update)
+  }
+)
+//#endregion
+
+//#region Controls
+function ControlPanel() {
+  const [, handleReset] = useAtom(handleResetAtom);
+  const [isAnimated, handleAnimation] = useAtom(handleAnimationAtom);
+  const [currentAlgo, setCurrentAlgo] = useAtom(handleAlgorithmAtom);
+  const [arraySize, setArraySize] = useAtom(arraySizeAtom);
+
+  useEffect(() => {
+    handleReset();
+  }, []);
+
+  return (
+    <div className={styles.controlContainer}>
+      <h2 className={styles.heading}>Sorting Visualization</h2>
+      <Slider label={"Size:"} min={10} max={250} value={arraySize} setValue={setArraySize} />
+      <ControlButton text="Reset" action={handleReset} disabled={isAnimated} />
+      <div className={styles.buttonGroup}>
+        <ControlButton text="Merge Sort" action={() => setCurrentAlgo(0)} active={currentAlgo === 0} />
+        <ControlButton text="Quick Sort" action={() => setCurrentAlgo(1)} active={currentAlgo === 1} />
+        <ControlButton text="Heap Sort" action={() => setCurrentAlgo(2)} active={currentAlgo === 2} />
+        <div className={styles.separator}></div>
+        <ControlButton text="Bubble Sort" action={() => setCurrentAlgo(3)} active={currentAlgo === 3} />
+        <ControlButton text="Selection Sort" action={() => setCurrentAlgo(4)} active={currentAlgo === 4} />
+        <ControlButton text="Cocktail Sort" action={() => setCurrentAlgo(5)} active={currentAlgo === 5} />
+      </div>
+      <ControlButton text="START!" action={handleAnimation} disabled={isAnimated} />
+    </div>
+  )
+}
+//#endregion
+
+//#region Animation
+function AnimationPanel() {
+  const [array] = useAtom(arrayAtom);
+
+  return (
+    <div className={styles.animationContainer}>
+      {array.map((bar, index) => (
+        <VerticalBar key={index} {...bar} />
+      ))}
+    </div>
+  )
+}
+//#endregion
+
+//#region Page
+export default function IndexPage() {
+  const [arraySize] = useAtom(arraySizeAtom);
+  const [modalShow, setModalShow] = useAtom(modalAtom);
+  const [countCompare] = useAtom(countCompareAtom);
+  const [countSwap] = useAtom(countSwapAtom);
+  const [timeElapsed] = useAtom(timeElapsedAtom);
 
   return (
     <Layout >
@@ -122,28 +168,15 @@ export default function IndexPage() {
       </Modal>
 
       <div className={styles.mainContainer}>
-        <div className={styles.controlContainer}>
-          <h2 className={styles.heading}>Sorting Visualization</h2>
-          <Slider label={"Size:"} min={10} max={250} value={arraySize} setValue={setArraySize} />
-          <ControlButton text="Reset" action={resetArray} disabled={animated} />
-          <div className={styles.buttonGroup}>
-            <ControlButton text="Merge Sort" action={() => setCurrentAlgo(0)} active={currentAlgo === 0} />
-            <ControlButton text="Quick Sort" action={() => setCurrentAlgo(1)} active={currentAlgo === 1} />
-            <ControlButton text="Heap Sort" action={() => setCurrentAlgo(2)} active={currentAlgo === 2} />
-            <div className={styles.separator}></div>
-            <ControlButton text="Bubble Sort" action={() => setCurrentAlgo(3)} active={currentAlgo === 3} />
-            <ControlButton text="Selection Sort" action={() => setCurrentAlgo(4)} active={currentAlgo === 4} />
-            <ControlButton text="Cocktail Sort" action={() => setCurrentAlgo(5)} active={currentAlgo === 5} />
-          </div>
-          <ControlButton text="START!" action={startSorting} disabled={animated} />
-        </div>
-
-        <div className={styles.animationContainer}>
-          {array.map((bar, index) => (
-            <VerticalBar key={index} {...bar} />
-          ))}
-        </div>
+        <ControlPanel />
+        <AnimationPanel />
       </div>
     </Layout>
   )
+}
+//#endregion
+
+// helper function
+function randomIntFromInterval(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
 }
