@@ -15,7 +15,8 @@ export default function GraphNode({
   col,
   mouseDown,
   mouseEnter,
-  mouseUp
+  mouseUp,
+  connection
 }: {
   type: GridNodeType,
   row: number,
@@ -23,6 +24,7 @@ export default function GraphNode({
   mouseDown: (update: Coord) => void,
   mouseEnter: (update: Coord) => void,
   mouseUp: (update: Coord) => void,
+  connection?: number[]
 }) {
   const firstRowStyle = row === 0 ? styles.firstRow : '';
   const firstColStyle = col === 0 ? styles.firstCol : '';
@@ -32,9 +34,17 @@ export default function GraphNode({
         type === VISITED_NODE ? styles.visited :
           type === PATH_NODE ? styles.path :
             type === WEIGHT_NODE ? styles.weighted : styles.empty;
+  
+  let connectionType = '';
+  if (connection !== undefined) {
+    if (connection[0]) connectionType += ` ${styles.up}`;
+    if (connection[1]) connectionType += ` ${styles.right}`;
+    if (connection[2]) connectionType += ` ${styles.down}`;
+    if (connection[3]) connectionType += ` ${styles.left}`;
+  }
   return (
     <div
-      className={`${styles.node} ${firstRowStyle} ${firstColStyle} ${typeStyle}`}
+      className={`${styles.node} ${firstRowStyle} ${firstColStyle} ${typeStyle} ${connectionType}`}
       onMouseDown={(e) => {
         e.preventDefault();
         mouseDown([row, col])

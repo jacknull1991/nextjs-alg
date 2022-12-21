@@ -21,7 +21,8 @@ export type GridNode = {
   coord: Coord,
   type: GridNodeType,
   distance: number,
-  previous: GridNode | null
+  previous: GridNode | null,
+  connection?: number[]
 };
 
 export const useCommitCount = () => {

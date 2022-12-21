@@ -18,7 +18,7 @@ import { ArrayBar } from "../../lib/utils"
 const SIZE = 20;
 const MAX_HEIGHT = 600;
 const MIN_HEIGHT = 10;
-const ANIMATION_SPEED = 3;
+const ANIMATION_SPEED = 20; // milliseconds per interval
 //#endregion
 
 //#region States definitions

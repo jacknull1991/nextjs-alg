@@ -1,12 +1,14 @@
 .node {
   width: 26px;
-  min-width: 26px;
-  height: 26px;
-  min-height: 26px;
+  // min-width: 26px;
+  // height: 26px;
+  // min-height: 26px;
+  aspect-ratio: 1/1;
   border: 1px solid rgb(148, 209, 230);
   border-top: 0;
   border-left: 0;
   box-sizing: border-box;
+  overflow: hidden;
 
   &.firstRow {
     border-top: 1px solid rgb(148, 209, 230);
@@ -21,13 +23,13 @@
   }
 
   &.start {
-    background-color: lightcoral;
-    cursor: pointer;
+    background-color: red;
+    cursor: move;
   }
 
   &.target {
-    background-color: rgb(245, 241, 7);
-    cursor: pointer;
+    background-color: yellow;
+    cursor: move;
   }
 
   &.wall {
@@ -74,6 +76,108 @@
 
   &.mouseover {
     background-color: rgb(145, 117, 100);
+  }
+  &.up,
+  &.down,
+  &.left,
+  &.right {
+    &::before,
+    &::after {
+      content: '';
+      display: block;
+      background-color: black;
+      position: relative;
+    }
+  }
+  &.up::before {
+    left: calc(50% - 2px);
+    width: 4px;
+    height: 50%;
+  }
+  &.down::before {
+    left: calc(50% - 2px);
+    top: 50%;
+    width: 4px;
+    height: 50%;
+  }
+  &.left::before {
+    top: calc(50% - 2px);
+    height: 4px;
+    width: 50%;
+  }
+  &.right::before {
+    top: calc(50% - 2px);
+    left: 50%;
+    height: 4px;
+    width: 50%;
+  }
+  &.up.down::before {
+    top: 0px;
+    left: calc(50% - 2px);
+    width: 4px;
+    height: 100%;
+  }
+  &.left.right::before {
+    left: 0px;
+    top: calc(50% - 2px);
+    height: 4px;
+    width: 100%;
+  }
+  &.up.left {
+    &::before {
+      top: 0px;
+      left: calc(50% - 2px);
+      width: 4px;
+      height: 50%;
+    }
+    &::after {
+      left: 0px;
+      top: -2px;
+      height: 4px;
+      width: calc(50% + 2px);
+    }
+  }
+  &.up.right {
+    &::before {
+      top: 0px;
+      left: calc(50% - 2px);
+      width: 4px;
+      height: 50%;
+    }
+    &::after {
+      left: calc(50% - 2px);
+      top: -2px;
+      height: 4px;
+      width: calc(50% + 2px);
+    }
+  }
+  &.down.left {
+    &::before {
+      top: calc(50% - 2px);
+      left: 0px;
+      width: 50%;
+      height: 4px;
+    }
+    &::after {
+      left: calc(50% - 2px);
+      top: calc(50% - 6px);
+      height: calc(50% + 2px);
+      width: 4px;
+    }
+  }
+  &.down.right {
+    &::before {
+      top: calc(50% - 2px);
+      left: 50%;
+      width: 50%;
+      height: 4px;
+    }
+    &::after {
+      left: calc(50% - 2px);
+      top: calc(50% - 6px);
+      height: calc(50% + 2px);
+      width: 4px;
+    }
   }
 }
 

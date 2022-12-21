@@ -20,7 +20,7 @@ const START_COL = 3;
 const TARGET_ROW = 2;
 const TARGET_COL = 1;
 
-const ANIMATION_SPEED = 50;
+const ANIMATION_SPEED = 20; // milliseconds per interval
 //#endregion
 
 //#region React states definitions
@@ -113,7 +113,6 @@ const handleAnimationAtom = atom(
         const node = visited[i];
         set(gridAtom, (draft) => {
           draft[node.coord[0]][node.coord[1]].type = GridNodeType.VISITED_NODE;
-          return draft;
         });
 
         if (i === visited.length - 1) {
@@ -121,11 +120,41 @@ const handleAnimationAtom = atom(
             if (path.length === 0) {
               // no path found
             } else {
-              for (let j = 1; j < path.length - 1; j++) {
+              for (let j = 1; j < path.length; j++) {
                 const pathnode = path[j];
                 setTimeout(() => {
                   set(gridAtom, (draft) => {
-                    draft[pathnode.coord[0]][pathnode.coord[1]].type = GridNodeType.PATH_NODE;
+                    if (j !== path.length - 1) {
+                      draft[pathnode.coord[0]][pathnode.coord[1]].type = GridNodeType.PATH_NODE;
+                    }
+                    // check connection
+                    if (draft[pathnode.coord[0]][pathnode.coord[1]].connection === undefined) {
+                      draft[pathnode.coord[0]][pathnode.coord[1]].connection = new Array<number>(4);
+                    }
+                    if (draft[path[j-1].coord[0]][path[j-1].coord[1]].connection === undefined) {
+                      draft[path[j-1].coord[0]][path[j-1].coord[1]].connection = new Array<number>(4);
+                    }
+                    
+                    if (pathnode.coord[1] === path[j-1].coord[1] + 1) { // from left
+                      console.log("from left")
+                      draft[pathnode.coord[0]][pathnode.coord[1]].connection![3] = 1;
+                      draft[path[j-1].coord[0]][path[j-1].coord[1]].connection![1] = 1;
+                    }
+                    else if (pathnode.coord[1] === path[j-1].coord[1] - 1) { // from right
+                      console.log("from right")
+                      draft[pathnode.coord[0]][pathnode.coord[1]].connection![1] = 1;
+                      draft[path[j-1].coord[0]][path[j-1].coord[1]].connection![3] = 1;
+                    }
+                    else if (pathnode.coord[0] === path[j-1].coord[0] + 1) { // from up
+
+                      draft[pathnode.coord[0]][pathnode.coord[1]].connection![0] = 1;
+                      draft[path[j-1].coord[0]][path[j-1].coord[1]].connection![2] = 1;
+                    }
+                    else if (pathnode.coord[0] === path[j-1].coord[0] - 1) { // from down
+                      draft[pathnode.coord[0]][pathnode.coord[1]].connection![2] = 1;
+                      draft[path[j-1].coord[0]][path[j-1].coord[1]].connection![0] = 1;
+                    }
+                    console.log( draft[pathnode.coord[0]][pathnode.coord[1]].connection)
                   })
                 }, j * ANIMATION_SPEED);
               }
@@ -165,9 +194,6 @@ function ControlPanel() {
         <ControlButton text={"Breadth-first Search"}
           action={() => setCurrentAlgorithm(1)}
           active={currentAlgorithm === 1} />
-        <ControlButton text={"Dijkstra's"}
-          action={() => setCurrentAlgorithm(2)}
-          active={currentAlgorithm === 2} />
       </div>
       <ControlButton text="START!" action={handleAnimation} disabled={isAnimated} />
     </div>
@@ -197,6 +223,7 @@ function AnimationPanel() {
                   mouseDown={handleMouseDown}
                   mouseUp={handleMouseUp}
                   mouseEnter={handleMouseEnter}
+                  connection={node.connection}
                 />
               )
             })}

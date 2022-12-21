@@ -114,20 +114,6 @@ export function breadthFirstSearch(
 }
 //#endregion
 
-//#region Dijkstra
-export function dijkstra(
-  grid: GridNode[][],
-  start: GridNode,
-  target: GridNode
-) {
-  const stack: GridNode[] = [];
-  const visited: GridNode[] = [];
-  const path: GridNode[] = [];
-
-  return { visited, path }
-}
-//#endregion
-
 function getPath(
   node: GridNode,
   path: GridNode[]
@@ -140,6 +126,5 @@ function getPath(
 
 export default [
   depthFirstSearch,
-  breadthFirstSearch,
-  dijkstra
+  breadthFirstSearch
 ]
