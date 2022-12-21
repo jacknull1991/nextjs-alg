@@ -17,8 +17,8 @@ const COL_NUM = 20;
 
 const START_ROW = 3;
 const START_COL = 3;
-const TARGET_ROW = 2;
-const TARGET_COL = 1;
+const TARGET_ROW = 15;
+const TARGET_COL = 18;
 
 const ANIMATION_SPEED = 20; // milliseconds per interval
 //#endregion
@@ -131,30 +131,26 @@ const handleAnimationAtom = atom(
                     if (draft[pathnode.coord[0]][pathnode.coord[1]].connection === undefined) {
                       draft[pathnode.coord[0]][pathnode.coord[1]].connection = new Array<number>(4);
                     }
-                    if (draft[path[j-1].coord[0]][path[j-1].coord[1]].connection === undefined) {
-                      draft[path[j-1].coord[0]][path[j-1].coord[1]].connection = new Array<number>(4);
+                    if (draft[path[j - 1].coord[0]][path[j - 1].coord[1]].connection === undefined) {
+                      draft[path[j - 1].coord[0]][path[j - 1].coord[1]].connection = new Array<number>(4);
                     }
-                    
-                    if (pathnode.coord[1] === path[j-1].coord[1] + 1) { // from left
-                      console.log("from left")
-                      draft[pathnode.coord[0]][pathnode.coord[1]].connection![3] = 1;
-                      draft[path[j-1].coord[0]][path[j-1].coord[1]].connection![1] = 1;
-                    }
-                    else if (pathnode.coord[1] === path[j-1].coord[1] - 1) { // from right
-                      console.log("from right")
-                      draft[pathnode.coord[0]][pathnode.coord[1]].connection![1] = 1;
-                      draft[path[j-1].coord[0]][path[j-1].coord[1]].connection![3] = 1;
-                    }
-                    else if (pathnode.coord[0] === path[j-1].coord[0] + 1) { // from up
 
+                    if (pathnode.coord[1] === path[j - 1].coord[1] + 1) { // from left
+                      draft[pathnode.coord[0]][pathnode.coord[1]].connection![3] = 1;
+                      draft[path[j - 1].coord[0]][path[j - 1].coord[1]].connection![1] = 1;
+                    }
+                    else if (pathnode.coord[1] === path[j - 1].coord[1] - 1) { // from right
+                      draft[pathnode.coord[0]][pathnode.coord[1]].connection![1] = 1;
+                      draft[path[j - 1].coord[0]][path[j - 1].coord[1]].connection![3] = 1;
+                    }
+                    else if (pathnode.coord[0] === path[j - 1].coord[0] + 1) { // from up
                       draft[pathnode.coord[0]][pathnode.coord[1]].connection![0] = 1;
-                      draft[path[j-1].coord[0]][path[j-1].coord[1]].connection![2] = 1;
+                      draft[path[j - 1].coord[0]][path[j - 1].coord[1]].connection![2] = 1;
                     }
-                    else if (pathnode.coord[0] === path[j-1].coord[0] - 1) { // from down
+                    else if (pathnode.coord[0] === path[j - 1].coord[0] - 1) { // from down
                       draft[pathnode.coord[0]][pathnode.coord[1]].connection![2] = 1;
-                      draft[path[j-1].coord[0]][path[j-1].coord[1]].connection![0] = 1;
+                      draft[path[j - 1].coord[0]][path[j - 1].coord[1]].connection![0] = 1;
                     }
-                    console.log( draft[pathnode.coord[0]][pathnode.coord[1]].connection)
                   })
                 }, j * ANIMATION_SPEED);
               }
