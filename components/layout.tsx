@@ -1,19 +1,19 @@
-import React from "react"
+import React, { useState } from "react"
 import Navbar from "./navbar"
-
-import styles from './layout.module.scss'
 
 export default function Layout({
   children
 }: {
   children: React.ReactNode
 }) {
+  const [theme, setTheme] = useState('light');
+
   return (
-    <>
-      <Navbar />
+    <div data-theme={theme}>
+      <Navbar setTheme={setTheme}/>
       <main>
         {children}
       </main>
-    </>
+    </div>
   )
 }

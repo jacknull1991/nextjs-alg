@@ -1,0 +1,48 @@
+:root {
+  --theme-primary: #000;
+  --theme-secondary: #aaa;
+  --theme-background: #fff;
+  --theme-border-color: #eee;
+  --theme-button-color: #0070f3;
+  --theme-button-background: #fff;
+  --theme-button-background-hover: #e9f3ff;
+  --theme-button-color-active: #fff;
+  --theme-button-background-active: #0070f3;
+  --theme-button-color-disabled: #aaa;
+}
+[data-theme='dark'] {
+  --theme-primary: #fff;
+  --theme-secondary: #ddd;
+  --theme-background: #000;
+  --theme-border-color: #222;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    color: white;
+    background: black;
+  }
+}

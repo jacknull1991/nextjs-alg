@@ -4,8 +4,8 @@
   padding: 5px;
 
   .sliderLabel {
-    color: #0070f3;
-    background-color: #fff;
+    color: var(--theme-button-color);
+    background-color: var(--theme-button-background);
     font-weight: 400;
     margin: 0 5px;
   }
@@ -15,7 +15,7 @@
     appearance: none;
     width: 120px;
     height: 12px;
-    background-color: #aaa;
+    background-color: var(--theme-button-color-disabled);
     outline: none;
     opacity: 1.0;
     transition: opacity .2s;
@@ -26,7 +26,7 @@
       appearance: none;
       width: 20px;
       height: 20px;
-      background: #0070f3;
+      background: var(--theme-button-color);
       border-radius: 50%;
       cursor: pointer;
     }

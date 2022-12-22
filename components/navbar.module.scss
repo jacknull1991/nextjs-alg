@@ -1,19 +1,14 @@
-$primary-color: #000;
-$secondary-color: #aaa;
-$border: 1px solid #eee;
-$primary-background: rgba(255, 255, 255, .8);
-$secondary-background: rgba(255, 255, 255, 1);
-
-
 .header {
   width: 100%;
   z-index: 3000;
   text-align: center;
   backdrop-filter: saturate(180%) blur(5px);
-  background: $primary-background;
+  color: var(--theme-primary);
+  background: var(--theme-background);
+  opacity: .9;
   position: sticky;
   top: 0;
-  border-bottom: $border;
+  border-bottom: var(--theme-border-color);
   white-space: nowrap;
   box-sizing: border-box;
 }
@@ -27,6 +22,53 @@ $secondary-background: rgba(255, 255, 255, 1);
 
   .heading {
     margin: .67rem 2rem;
+  }
+
+  .toggleSwitch {
+    position: relative;
+    display: inline-block;
+    width: 2.8rem;
+    height: 1.6rem;
+    margin-left: 1rem;
+    margin-top: 5px;
+
+    input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .toggle {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: var(--theme-primary);
+      -webkit-transition: .4s;
+      transition: .4s;
+      border-radius: 24px;
+
+      &::before {
+        content: "";
+        position: absolute;
+        height: 1.2rem;
+        width: 1.2rem;
+        left: .2rem;
+        bottom: .2rem;
+        background-color: var(--theme-background);
+        -webkit-transition: .4s;
+        transition: .4s;
+        border-radius: 50%;
+      }
+    }
+
+    input:checked + .toggle {
+      &::before {
+        -webkit-transform: translateX(1.2rem);
+        transform: translateX(1.2rem);
+      }
+    }
   }
 }
 
@@ -60,7 +102,7 @@ $secondary-background: rgba(255, 255, 255, 1);
       display: block;
       height: 1px;
       width: 22px;
-      background-color: $primary-color;
+      background-color: var(--theme-primary);
       transform: translateY(-4px);
       transition: transform .15s ease;
     }
@@ -93,12 +135,12 @@ $secondary-background: rgba(255, 255, 255, 1);
 
     a {
       text-decoration: none;
-      color: $secondary-color;
+      color: var(--theme-secondary);
       display: block;
       width: 100%;
 
       &:hover {
-        color: $primary-color;
+        color: var(--theme-primary);
       }
     }
   }
@@ -107,6 +149,7 @@ $secondary-background: rgba(255, 255, 255, 1);
 @media screen and (max-width: 768px) {
   .header {
     position: relative;
+    opacity: 1;
   }
 
   .navbar .heading {
@@ -127,8 +170,7 @@ $secondary-background: rgba(255, 255, 255, 1);
       width: 100%;
       height: calc(100vh - 80px);
       margin: 0;
-      background-color: $secondary-background;
-
+      background-color: var(--theme-background);
       li {
         text-align: center;
         margin: 0;

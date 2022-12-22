@@ -1,8 +1,8 @@
 .controlButton {
   display: block;
   border-radius: 5px;
-  color: #0070f3;
-  background-color: #fff;
+  color: var(--theme-button-color);
+  background-color: var(--theme-button-background);
   border: none;
   padding: .3rem .67rem;
   margin: 0 5px;
@@ -11,15 +11,15 @@
   cursor: pointer;
 
   &:hover {
-    background-color: #e9f3ff;
+    background-color: var(--theme-button-background-hover);
   }
   &.active {
-    background-color: #0070f3;
-    color: #fff;
+    background-color: var(--theme-button-background-active);
+    color: var(--theme-button-color-active);
     text-shadow: 0 0 3px #111, 0 0 3px #111;
   }
   &:disabled {
-    color: #aaa;
+    color: var(--theme-button-color-disabled);
   }
 }
 
